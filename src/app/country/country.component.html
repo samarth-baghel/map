@@ -1,0 +1,23 @@
+<div class="body">
+	<h2 class="d-flex justify-content-center">To show the countries map</h2>
+	<form #mapForm="ngForm" (submit)="submit(mapForm)">
+		<div class="d-flex justify-content-center ">
+			<ng-select name="country" class="input" (change)="enabled()" [(ngModel)]="country" required>
+				<ng-option *ngFor="let nameOfCountry of dataOfCountry" [value]="nameOfCountry">{{nameOfCountry}}
+				</ng-option>
+			</ng-select>
+		</div>
+		<div class="button">
+			<button type="submit" [ngClass]="isCheck ? 'btn btn-secondary': 'btn btn-primary'"
+				[disabled]="isCheck">Submit</button>
+			<button [disabled]="isTrue" [ngClass]="isTrue ? 'btn btn-secondary': 'btn btn-primary'"
+				(click)="resetFormValue(mapForm)">Reset</button>
+		</div>
+	</form>
+
+	<div class="d-flex justify-content-center" *ngIf="latitude !=='' && longitude !=='' ">
+		<agm-map [latitude]="latitude" [longitude]="longitude">
+			<agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
+		</agm-map>
+	</div>
+</div>
