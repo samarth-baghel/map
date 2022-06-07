@@ -10,7 +10,7 @@ import { CountryDetailsService } from '../service/country-details.service';
   templateUrl: './country.component.html',
   styleUrls: ['./country.component.scss']
 })
-export class CountryComponent implements OnInit, AfterViewInit  {
+export class CountryComponent implements OnInit  {
   country: any;
   isShown: boolean = true;
   searchDropdown: any;
@@ -28,6 +28,7 @@ export class CountryComponent implements OnInit, AfterViewInit  {
   // getAddress:any;
   assgin: any;
   currentLocation: any
+  // hello
   // @ViewChild(PlaceholderDirective) mapHost!: PlaceholderDirective;
   countryName: any;
   geoCoder: any;
@@ -38,14 +39,7 @@ export class CountryComponent implements OnInit, AfterViewInit  {
     private cdr : ChangeDetectorRef,
     private mapsAPILoader: MapsAPILoader) { }
    
-  ngAfterViewInit(){
-    // if (this.countryName !== undefined) {
-    //   console.log(this.countryName)
-    //   this.errorMsg = "There is no data in dropdown list";
-    //   this.cdr.detectChanges();
-    // }
 
-  }
 
   ngOnInit(): void {
     // this.mapsAPILoader.load().then(() => {
