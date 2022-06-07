@@ -1,15 +1,25 @@
+
 <div class="body">
+	<div class="alert alert-danger" role="alert" *ngIf="errorMsg == ''">{{errorMsg}}</div>
 	<h2 class="d-flex justify-content-center">To show the countries map</h2>
-	<form #mapForm="ngForm" (submit)="submit(mapForm)">
+	<form #mapForm="ngForm" (keydown)="move($event,mapForm.form)" (submit)="submit(mapForm)"  autocomplete="off">
 		<div class="d-flex justify-content-center ">
-			<ng-select name="country" class="input" (change)="enabled()" [(ngModel)]="country" required>
+			<ng-select name="country" class="input" (change)="enabled()"  [(ngModel)]="country" required>
 				<ng-option *ngFor="let nameOfCountry of dataOfCountry" [value]="nameOfCountry">{{nameOfCountry}}
 				</ng-option>
 			</ng-select>
 		</div>
+		<!-- <div class="d-flex justify-content-center">
+			<input type="text" class="input" autocomplete="off"  name="searchDropdown" [(ngModel)]="searchDropdown" (click)="toShowDropdown()" (keyup)="filtering($event)" >
+		</div>
+		<div class="dropdown-content" [hidden]="isShown">
+			<option value="" [hidden]="isOptions" class="showError">There is no counrty name exits</option>
+			<option *ngFor="let data of dataOfCountry" (click)="setValue(data)" [value]="data">{{data}}</option>
+			
+		</div> -->
 		<div class="button">
 			<button type="submit" [ngClass]="isCheck ? 'btn btn-secondary': 'btn btn-primary'"
-				[disabled]="isCheck">Submit</button>
+				[disabled]="isCheck" >Submit</button>
 			<button [disabled]="isTrue" [ngClass]="isTrue ? 'btn btn-secondary': 'btn btn-primary'"
 				(click)="resetFormValue(mapForm)">Reset</button>
 		</div>
