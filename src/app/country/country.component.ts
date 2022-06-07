@@ -1,5 +1,5 @@
 import { MapsAPILoader } from '@agm/core';
-import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {  AfterViewInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 // import { MapComponent } from '../map/map.component';
 // import { PlaceholderDirective } from '../placeholder.directive';
@@ -19,6 +19,7 @@ export class CountryComponent implements OnInit, AfterViewInit  {
   isTrue: boolean = true;
   addres: any;
   lat: any;
+  isClose:boolean=true;
   errorMsg: any = "";
   lng: any;
   latitude: any = '';
@@ -38,11 +39,11 @@ export class CountryComponent implements OnInit, AfterViewInit  {
     private mapsAPILoader: MapsAPILoader) { }
    
   ngAfterViewInit(){
-    if (this.dataOfCountry.length == 0) {
-      console.log(this.dataOfCountry.length)
-      this.errorMsg = "There is no data in dropdown list";
-      this.cdr.detectChanges();
-    }
+    // if (this.countryName !== undefined) {
+    //   console.log(this.countryName)
+    //   this.errorMsg = "There is no data in dropdown list";
+    //   this.cdr.detectChanges();
+    // }
 
   }
 
@@ -77,14 +78,15 @@ export class CountryComponent implements OnInit, AfterViewInit  {
       console.log(indexOfIndia);
       console.log(this.countryName.length == 0)
       console.log(this.dataOfCountry.length)
+    },(error)=> {
+      this.errorMsg = "There is no data in dropdown list";
+      this.isClose=false;
     })
 
   }
   enabled() {
     this.isCheck = false;
     this.isTrue = false;
-    let devCn:any = document.querySelector('.ng-option .ng-option-disabled');
-    devCn.inneHtml="There is no country name in dropdown"
   }
   submit(formValue: NgForm) {
     this.isCheck = true
@@ -95,6 +97,11 @@ export class CountryComponent implements OnInit, AfterViewInit  {
       if (this.country == "India" || this.searchDropdown == "India") {
         this.latitude = this.lat;
         this.longitude = this.lng;
+        if(this.latitude==undefined||this.longitude==undefined){
+          console.log(this.longitude)
+          this.errorMsg="There is some problem in api so plzs retry after sometime"
+          this.isClose=true;
+        }
       }
       else if (val.name.common == this.country || val.name.common == this.searchDropdown) {
         console.log(val.latlng)
@@ -102,14 +109,18 @@ export class CountryComponent implements OnInit, AfterViewInit  {
         this.longitude = val.latlng[1]
         console.log(this.latitude)
         console.log(this.longitude)
-
-      }else{
-        this.errorMsg="Plzs pay billing account of google console"
+        if(this.latitude==undefined||this.longitude==undefined){
+          this.errorMsg="There is some problem in api so plzs retry after sometime"
+          this.isClose=true;
+        }
       }
+     
     }
     this.countryName
   }
-
+  close(){
+    this.isClose=true;
+  }
   move(event: any,val:any) {
     console.log(event.keyCode);
     if(event.keyCode==13){

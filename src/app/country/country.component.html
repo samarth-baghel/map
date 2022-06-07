@@ -1,6 +1,10 @@
 
 <div class="body">
-	<div class="alert alert-danger" role="alert" *ngIf="errorMsg == ''">{{errorMsg}}</div>
+	<div class="alert alert-danger" role="alert" [hidden]="isClose" >
+	<div class="d-flex justify-content-center" *ngIf="errorMsg!=''">{{errorMsg}}  <button class="btn btn-primary buttonClose" (click)="close()">×</button></div>
+	
+	</div>
+
 	<h2 class="d-flex justify-content-center">To show the countries map</h2>
 	<form #mapForm="ngForm" (keydown)="move($event,mapForm.form)" (submit)="submit(mapForm)"  autocomplete="off">
 		<div class="d-flex justify-content-center ">
